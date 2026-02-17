@@ -51,4 +51,9 @@ jobs:
           # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
           # or https://docs.anthropic.com/en/docs/claude-code/sdk#command-line for available options
           claude_args: '--allowed-tools "Bash(gh issue view:*),Bash(gh search:*),Bash(gh issue list:*),Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh pr list:*)"'
+# Capture the Core Constitution
+SOFIA_RULES=$(cat SOFIA_CORE.md)
+
+# Update the Prompt to include the rules
+FULL_PROMPT="Constitution: $SOFIA_RULES \n\n Code Diff: \n $PR_DIFF"
 
