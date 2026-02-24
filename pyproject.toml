@@ -1,3 +1,10 @@
+project_name: "Hemet Flagship"
+output_path: "./docs/sofia_core"
+exclude_dirs: ["venv", ".git", "tests", "docs"]  # Added docs
+llm_model: "openai:gpt-4o"
+log_level: "INFO"
+# Run with full tracing and specific project name
+python -m ai_doc_gen --path ./your-repo --verbose --project-name "Aigis-Protocol-Alpha"
 Copy and edit environment variables
 cp .env.sample .env
 
