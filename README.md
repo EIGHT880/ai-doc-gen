@@ -174,3 +174,49 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Built with [pydantic-ai](https://ai.pydantic.dev/) for AI agent orchestration
 - Supports multiple LLM providers through OpenAI-compatible APIs (including OpenRouter)
 - Uses [Langfuse](https://langfuse.com/) for LLM observability
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hemet Flagship | Aigis Monitor</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #1a1a1a; color: white; text-align: center; }
+        .status-card { background: #2d2d2d; padding: 2rem; border-radius: 12px; display: inline-block; margin-top: 50px; border: 2px solid #444; }
+        .indicator { width: 20px; height: 20px; border-radius: 50%; display: inline-block; margin-right: 10px; }
+        .online { background: #2ecc71; box-shadow: 0 0 10px #2ecc71; }
+        .offline { background: #e74c3c; box-shadow: 0 0 10px #e74c3c; }
+        pre { text-align: left; background: #000; padding: 1rem; color: #0f0; }
+    </style>
+</head>
+<body>
+    <h1>🛡️ Hemet Flagship Aigis Control</h1>
+    <div class="status-card">
+        <div id="light" class="indicator offline"></div>
+        <span id="status-text">CONNECTING...</span>
+        <hr>
+        <div id="data-display"><pre>Awaiting Lingo Brain handshake...</pre></div>
+        <button onclick="fetchHeartbeat()">Manual Refresh</button>
+    </div>
+
+    <script>
+        async function fetchHeartbeat() {
+            const token = "your_secure_aigis_token"; // In production, don't hardcode this!
+            try {
+                const response = await fetch('http://localhost:8000/heartbeat', {
+                    headers: { 'X-API-KEY': token }
+                });
+                const data = await response.json();
+                
+                document.getElementById('light').className = 'indicator online';
+                document.getElementById('status-text').innerText = 'AIGIS SYSTEM: NOMINAL';
+                document.getElementById('data-display').innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+            } catch (error) {
+                document.getElementById('light').className = 'indicator offline';
+                document.getElementById('status-text').innerText = 'AIGIS SYSTEM: BREACH/OFFLINE';
+            }
+        }
+        setInterval(fetchHeartbeat, 60000); // Auto-refresh every minute
+        fetchHeartbeat();
+    </script>
+</body>
+</html>
